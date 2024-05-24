@@ -28,6 +28,9 @@ import streamlit.components.v1 as components
 # Display the HTML content in Streamlit
 
 
+st.markdown('<p class="big-font">✈️SKYPULSE</p>', unsafe_allow_html=True)
+st.markdown('<p class="small-font">Fly Safe, Land Secure..!!</p>', unsafe_allow_html=True)
+
 with open('data.yaml',mode='r') as f:
     data_yaml = yaml.load(f,Loader=SafeLoader)
     
@@ -37,6 +40,39 @@ labels = data_yaml['names']
 # Load the ONNX model , fault model
 yolo = ort.InferenceSession('Model/weights/best.onnx')
 Fault = joblib.load('Model/Wire_Fault.joblib')
+
+
+def custom_css():
+    st.markdown("""
+        <style>
+        .reportview-container {
+            background: #f0f0f5
+        }
+        .big-font {
+            font-size:50px !important;
+            font-family: cursive;
+            font-weight: bold;
+        }
+        .small-font {
+            font-family: monospace;
+            font-weight: 200;
+            font-style: italic;
+            font-size:20px !important;
+        }
+        .normal-font {
+            font-family: fangsong  ;
+            font-weight: 800;
+            font-size: 30px !important;
+            text-align: center;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+custom_css()
+
+# st.markdown('<p class="big-font">Hello, World!</p>', unsafe_allow_html=True)
+# st.markdown('<p class="small-font">This is some small text.</p>', unsafe_allow_html=True)
+
 def detect_dents_and_cracks(image):
     # Preprocess the image
     image = image.copy()
@@ -178,14 +214,14 @@ def suggest_repair_actions(damage_locations):
 if __name__ == "__main__":
   
     selected = option_menu(menu_title=None,
-            options=['Damage Detection', 'Wire Fault Detection','About'],
+            options=['Damage Detection', 'Faulty Wire Detection','About'],
             icons =['activity','activity','info'],
             default_index=0,
             orientation='horizontal',
             menu_icon="cast")
     
     if selected == "Damage Detection":
-        st.markdown("## Cracks & Dents Detection")
+        st.markdown('<p class="normal-font">Structural Integrity Assesment</p>', unsafe_allow_html=True)
         st.info('Upload Image to check any dents or cracks are present in image', icon="ℹ️")
         uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
 
@@ -217,8 +253,8 @@ if __name__ == "__main__":
         #components.html(html_content, height=600,scrolling=False)
 
 
-    if selected == "Wire Fault Detection" :
-        st.markdown("## Wire Fault Detection")
+    if selected == "Faulty Wire Detection" :
+        st.markdown('<p class="normal-font">Electrical Fault Identification</p>', unsafe_allow_html=True)
         st.info('Enter data to check any faults', icon="ℹ️")
         v= st.text_input("Enter Voltage:")
         i = st.text_input("Enter Current:")
@@ -247,24 +283,38 @@ if __name__ == "__main__":
        
 
     if selected == "About":
-        st.markdown("<h2 style='text-align: center;'>ABOUT</h2>", unsafe_allow_html=True)
+        st.markdown('<h2 class="normal-font">About</h2>', unsafe_allow_html=True)
+
+        # st.markdown("<h2 style='text-align: center;'>ABOUT</h2>", unsafe_allow_html=True)
         st.markdown("____")
-        st.markdown("<p style='text-align: center;font-size:30px'>Dual Risks of Faulty Wiring and Structural Damage in aircraft</p>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center;font-size:30px; font-family:Roboto'>Plane Checkups: Key to Safe Flights</p>", unsafe_allow_html=True)
         st.markdown("____")
         st.markdown("""
-        Aircraft maintenance and repair are integral components of the aviation industry, serving as the backbone of safety, reliability, and operational continuity. The meticulous assessment and meticulous repair of dents, damage, detection of faulty wires and wear on aircraft fuselage, wings, and other components are paramount to ensuring flight safety, regulatory compliance, and public confidence.
-
-        First and foremost, the safety of passengers, crew, and cargo is the primary concern in aviation. Any compromise to the structural integrity of an aircraft, no matter how minor, poses a potential threat to safety. Damage, such as dents or structural deformities, can disrupt airflow, compromise aerodynamics, and weaken critical structural elements, increasing the risk of catastrophic failures during flight.
-
-        Similarly, faulty wiring poses a significant safety risk, as it can lead to electrical malfunctions within critical aircraft systems. These malfunctions may result in system failures, in-flight emergencies, or even fires, jeopardizing the safety of passengers, crew, and the aircraft itself.
-
-        Thus, thorough assessments and repairs are essential to maintaining the airworthiness of aircraft and safeguarding against potential accidents.
-        """,unsafe_allow_html=True)
+        <div style="text-align: justify; font-family:times new roman"> 
+            Aircraft maintenance and repair are integral components of the aviation industry, serving as the backbone of safety, reliability, and operational continuity. The meticulous assessment and meticulous repair of dents, damage, detection of faulty wires and wear on aircraft fuselage, wings, and other components are paramount to ensuring flight safety, regulatory compliance, and public confidence.
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown("""
+        <div style="text-align: justify; font-family:times new roman; padding-top: 10px"> 
+            First and foremost, the safety of passengers, crew, and cargo is the primary concern in aviation. Any compromise to the structural integrity of an aircraft, no matter how minor, poses a potential threat to safety. Damage, such as dents or structural deformities, can disrupt airflow, compromise aerodynamics, and weaken critical structural elements, increasing the risk of catastrophic failures during flight.
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown("""
+        <div style="text-align: justify; font-family:times new roman; padding-top: 10px"> 
+            Similarly, faulty wiring poses a significant safety risk, as it can lead to electrical malfunctions within critical aircraft systems. These malfunctions may result in system failures, in-flight emergencies, or even fires, jeopardizing the safety of passengers, crew, and the aircraft itself.
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown("""
+        <div style="text-align: justify; font-family:times new roman; padding-top: 10px"> 
+            
+Thus, thorough assessments and repairs are essential to maintaining the airworthiness of aircraft and safeguarding against potential accidents.
+        </div>
+        """, unsafe_allow_html=True)
         st.markdown("____")
-        st.markdown("<h4 style='text-align: center;font-size:30px'>Developed and maintained by</h4>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center;'>Soumik Saha</p>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center;'>Pankaj Goel</p>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center;'>Bhagyasri Uddandam</p>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center;'>Souvik Dey</p>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center;'>Ayushi Gupta</p>", unsafe_allow_html=True)
+        st.markdown("<h4 style='text-align: center;font-size:30px'>CONTRIBUTORS</h4>", unsafe_allow_html=True)
+        st.markdown("""<div style="text-align: center; padding: 5px;"><a href="https://linkedin.com/in/soumikisonline" style="text-decoration: none;">Soumik Saha</a></div>""", unsafe_allow_html=True)
+        st.markdown("""<div style="text-align: center; padding: 5px;"><a href="https://www.linkedin.com/in/ayushi-gupta-72a38121b" style="text-decoration: none;">Ayushi Gupta</a></div>""", unsafe_allow_html=True)
+        st.markdown("""<div style="text-align: center; padding: 5px;"><a href="https://www.linkedin.com/in/souvik-dey-80b033241/" style="text-decoration: none;">Souvik Dey</a></div>""", unsafe_allow_html=True)
+        st.markdown("""<div style="text-align: center; padding: 5px;"><a href="https://www.linkedin.com/in/pankaj-goel-30195720a/" style="text-decoration: none;">Pankaj Goel</a></div>""", unsafe_allow_html=True)
+        st.markdown("""<div style="text-align: center; padding: 5px;"><a href="https://www.linkedin.com/in/bhagyasri-u/" style="text-decoration: none;">Bhagyasri Uddandam</a></div>""", unsafe_allow_html=True)
         st.markdown("____")
