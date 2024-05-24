@@ -28,7 +28,7 @@ import streamlit.components.v1 as components
 # Display the HTML content in Streamlit
 
 
-st.markdown('<p class="big-font">✈️SKYPULSE</p>', unsafe_allow_html=True)
+st.markdown('<p class="big-font">✈️SKYPULSE</p>', unsafe_allow_html=True) 
 st.markdown('<p class="small-font">Fly Safe, Land Secure..!!</p>', unsafe_allow_html=True)
 
 with open('data.yaml',mode='r') as f:
@@ -45,8 +45,9 @@ Fault = joblib.load('Model/Wire_Fault.joblib')
 def custom_css():
     st.markdown("""
         <style>
-        .reportview-container {
-            background: #f0f0f5
+        .appview-container {
+            background: rgb(107,255,246);
+            background: linear-gradient(90deg, rgba(107,255,246,1) 0%, rgba(45,240,205,1) 39%, rgba(101,194,229,1) 55%, rgba(58,166,210,1) 76%, rgba(140,153,233,0.9921218487394958) 100%, rgba(9,105,121,1) 100%);
         }
         .big-font {
             font-size:50px !important;
