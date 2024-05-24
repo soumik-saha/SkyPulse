@@ -27,6 +27,14 @@ import streamlit.components.v1 as components
 
 # Display the HTML content in Streamlit
 
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 st.markdown('<p class="big-font">✈️SKYPULSE</p>', unsafe_allow_html=True) 
 st.markdown('<p class="small-font">Fly Safe, Land Secure..!!</p>', unsafe_allow_html=True)
@@ -46,13 +54,12 @@ def custom_css():
     st.markdown("""
         <style>
         .appview-container {
-            background: rgb(107,255,246);
-            background: linear-gradient(90deg, rgba(107,255,246,1) 0%, rgba(45,240,205,1) 39%, rgba(101,194,229,1) 55%, rgba(58,166,210,1) 76%, rgba(140,153,233,0.9921218487394958) 100%, rgba(9,105,121,1) 100%);
+            background-image: linear-gradient(to right top, #b3dce3, #85c6dc, #57afd9, #2c96d5, #167bce);
         }
         .big-font {
             font-size:50px !important;
-            font-family: cursive;
             font-weight: bold;
+            color: white;
         }
         .small-font {
             font-family: monospace;
@@ -61,7 +68,7 @@ def custom_css():
             font-size:20px !important;
         }
         .normal-font {
-            font-family: fangsong  ;
+            font-family: fangsong;
             font-weight: 800;
             font-size: 30px !important;
             text-align: center;
