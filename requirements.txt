@@ -2,9 +2,7 @@ ipython==8.12.3
 joblib==1.4.0
 numpy==1.26.4
 onnxruntime==1.18.0
-opencv_contrib_python==4.7.0.72
-opencv_python==4.9.0.80
-opencv_python_headless==4.8.0.74
+opencv_python==4.9.0
 pandas==2.2.2
 Pillow==10.3.0
 plotly==5.22.0
