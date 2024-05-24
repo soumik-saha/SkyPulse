@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wire Fault Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        #readyToFlyMessage {
+            font-size: 24px;
+            color: green;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Wire Fault Prediction</h2>
+    <form id="predictionForm">
+        <label for="voltage">Voltage:</label>
+        <input type="number" id="voltage" name="voltage" step="any"><br>
+        <label for="current">Current:</label>
+        <input type="number" id="current" name="current" step="any"><br>
+        <label for="resistance">Resistance:</label>
+        <input type="number" id="resistance" name="resistance" step="any"><br>
+        <button type="button" onclick="predictWireStatus()">Predict</button>
+    </form>
+    <p id="prediction"></p>
+    <div id="repairInfo" style="display: none;">
+        <h3>Repair methods for broken or damaged wires:</h3>
+        <input type="checkbox" id="solderingCheckbox" onclick="displaySolderingDetails()"> Soldering<br>
+        <input type="checkbox" id="crimpingCheckbox" onclick="displayCrimpingDetails()"> Crimping<br>
+        <input type="checkbox" id="replacementCheckbox" onclick="displayReplacementDetails()"> Replacement<br>
+        <div id="solderingDetails" style="display: none;">
+            <p>A soldering iron is used to melt solder, a metal alloy, to create a strong electrical connection between two wires.</p>
+        </div>
+        <div id="crimpingDetails" style="display: none;">
+            <p>A crimping tool is used to crimp a metal connector, called a crimp terminal, onto the end of a wire. The crimp terminal is then inserted into a connector body, which creates a secure electrical connection.</p>
+        </div>
+        <div id="replacementDetails" style="display: none;">
+            <p>In some cases, the best course of action may be to replace the entire wire or cable assembly. This is typically done when the damage is extensive or if the wire is old and brittle.</p>
+        </div>
+    </div>
+    <div id="repairNotes" style="display: none;">
+        <h3>Notes for repairing aircraft wiring:</h3>
+        <input type="checkbox" id="inspectionCheckbox" onchange="checkCompletion()"> Inspection: Before making any repairs, the wiring system must be thoroughly inspected to identify the source of the problem.<br>
+        <input type="checkbox" id="documentationCheckbox" onchange="checkCompletion()"> Documentation: All repairs must be documented in the aircraft's maintenance log. This documentation should include the date of the repair, the nature of the problem, and the specific repair method that was used.<br>
+        <input type="checkbox" id="testingCheckbox" onchange="checkCompletion()"> Testing: After a repair is made, the wiring system must be tested to ensure that it is functioning properly.<br>
+    </div>
+    <div id="repairCompletion" style="display: none;">
+        <h3>Repair Completion</h3>
+        <input type="checkbox" id="repairDoneCheckbox" onchange="displayRepairNotes()"> Repair Done<br>
+    </div>
+    <div id="readyToFlyMessage">Ready to Fly!</div>
+</div>
+
+<script>
+    function predictWireStatus() {
+        var form = document.getElementById("predictionForm");
+        var formData = new FormData(form);
+
+        fetch("/predict", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("prediction").innerHTML = "Prediction: " + data.prediction;
+
+            // Show repair information if the wire is faulty
+            var repairInfo = document.getElementById("repairInfo");
+            if (data.prediction === "Faulty wire") {
+                repairInfo.style.display = "block";
+            } else {
+                repairInfo.style.display = "none";
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+
+    function displaySolderingDetails() {
+        var checkbox = document.getElementById("solderingCheckbox");
+        var details = document.getElementById("solderingDetails");
+        details.style.display = checkbox.checked ? "block" : "none";
+    }
+
+    function displayCrimpingDetails() {
+        var checkbox = document.getElementById("crimpingCheckbox");
+        var details = document.getElementById("crimpingDetails");
+        details.style.display = checkbox.checked ? "block" : "none";
+    }
+
+    function displayReplacementDetails() {
+        var checkbox = document.getElementById("replacementCheckbox");
+        var details = document.getElementById("replacementDetails");
+        details.style.display = checkbox.checked ? "block" : "none";
+    }
+
+    function displayRepairNotes() {
+        var checkbox = document.getElementById("repairDoneCheckbox");
+        var notes = document.getElementById("repairNotes");
+        notes.style.display = checkbox.checked ? "block" : "none";
+    }
+
+    function checkCompletion() {
+        var inspectionCheckbox = document.getElementById("inspectionCheckbox").checked;
+        var documentationCheckbox = document.getElementById("documentationCheckbox").checked;
+        var testingCheckbox = document.getElementById("testingCheckbox").checked;
+        var repairDoneCheckbox = document.getElementById("repairDoneCheckbox").checked;
+
+        if (inspectionCheckbox && documentationCheckbox && testingCheckbox && repairDoneCheckbox) {
+            document.getElementById("readyToFlyMessage").style.display = "block";
+        } else {
+            document.getElementById("readyToFlyMessage").style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
