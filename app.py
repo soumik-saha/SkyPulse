@@ -14,7 +14,7 @@ import trimesh
 #from stl import mesh
 import numpy as np
 import plotly.graph_objects as go
-import pyrender
+# import pyrender
 from PIL import Image
 import streamlit.components.v1 as components
 
@@ -118,7 +118,7 @@ def detect_dents_and_cracks(image):
 
     return image,damage_locations
 
-def render_3d():
+# def render_3d():
     stl_path = 'AirplaneAllFiles/AirplaneForFreestl.stl'
     # Load the STL file using trimesh
     mesh = trimesh.load(stl_path)
@@ -213,7 +213,7 @@ if __name__ == "__main__":
             # Update the call to the embed_3d_model function in your main code
             
         
-        render_3d()
+        # render_3d()
         #components.html(html_content, height=600,scrolling=False)
 
 
