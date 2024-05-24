@@ -209,7 +209,7 @@ if __name__ == "__main__":
             
             suggest_repair_actions(damage_locations)
 
-            st.write("### 3D Model of Detections")
+            # st.write("### 3D Model of Detections")
             # Update the call to the embed_3d_model function in your main code
             
         
